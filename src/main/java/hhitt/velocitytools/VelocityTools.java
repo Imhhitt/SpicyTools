@@ -8,6 +8,7 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
+import hhitt.velocitytools.commands.AlertCommand;
 import hhitt.velocitytools.commands.FindCommand;
 import org.slf4j.Logger;
 
@@ -30,11 +31,20 @@ public class VelocityTools{
     public void onProxyInitialization(ProxyInitializeEvent event) {
 
         CommandManager commandManager = proxy.getCommandManager();
-        CommandMeta commandMeta = commandManager.metaBuilder("find")
-                .aliases("whereis")
+
+
+        CommandMeta findCommandMeta = commandManager.metaBuilder("find")
+                .aliases("whereis", "findplayer")
                 .plugin(this)
                 .build();
-        SimpleCommand simpleCommand = new FindCommand(proxy);
-        commandManager.register(commandMeta, simpleCommand);
+        SimpleCommand findCommand = new FindCommand(proxy);
+        commandManager.register(findCommandMeta, findCommand);
+
+        CommandMeta alertCommandMeta = commandManager.metaBuilder("alert")
+                .aliases("broadcast")
+                .plugin(this)
+                .build();
+        SimpleCommand alertCommand = new AlertCommand(proxy);
+        commandManager.register(findCommandMeta, alertCommand);
     }
 }

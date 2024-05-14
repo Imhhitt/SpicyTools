@@ -5,8 +5,6 @@ import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import hhitt.velocitytools.utils.MessageUtils;
-
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -26,7 +24,12 @@ public class AlertCommand implements SimpleCommand {
 
         //Gets the message to send and converting it
         String[] args = invocation.arguments();
-        String alert = Arrays.toString(args);
+
+        if(args.length == 0){
+            sender.sendPlainMessage("no se usa así el alert cabron");
+            return;
+        }
+
 
         //Gets all online players and senf them the message
         Collection<Player> allPlayers = proxy.getAllPlayers().stream()
@@ -34,10 +37,18 @@ public class AlertCommand implements SimpleCommand {
                 .map(source -> (Player) source)
                 .collect(Collectors.toList());
 
-        allPlayers.forEach(player -> player.sendMessage(MessageUtils.MiniMessageParse(alert)));
+        StringBuilder alert = new StringBuilder();
+        for (int i = 0; i < args.length; i++) {
+            alert.append(args[i]);
+            if (i < args.length - 1) {
+                alert.append(" ");
+            }
+        }
+
+        allPlayers.forEach(player -> player.sendMessage(MessageUtils.MiniMessageParse(alert.toString())));
 
         //Also send the message to console
-        proxy.getConsoleCommandSource().sendMessage(MessageUtils.MiniMessageParse(alert));
+        proxy.getConsoleCommandSource().sendMessage(MessageUtils.MiniMessageParse(alert.toString()));
 
 
     }

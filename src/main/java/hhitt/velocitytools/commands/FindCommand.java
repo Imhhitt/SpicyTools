@@ -22,24 +22,28 @@ public class FindCommand implements SimpleCommand {
         CommandSource sender = invocation.source();
         String[] args = invocation.arguments();
 
-        if(proxy.getAllPlayers().contains(args[0])){
-
-            Optional<Player> playerToFind = proxy.getPlayer(args[0]);
-
-            sender.sendPlainMessage("The player" + args[0] + "is on the server" + playerToFind.get().getCurrentServer());
-
+        if(args.length == 0){
+            sender.sendPlainMessage("no se usa así");
+            return;
         }
 
+        if(sender.hasPermission("valocitytools.find")){
+
+
+            if(proxy.getAllPlayers().contains(args[0])){
+
+                Optional<Player> playerToFind = proxy.getPlayer(args[0]);
+
+                sender.sendPlainMessage("The player" + args[0] + "is on the server" + playerToFind.get().getCurrentServer());
+
+            }
+        } else{
+            sender.sendPlainMessage("jodete, no tienes perms");
+        }
+
+
+
     }
 
-    @Override
-    public boolean hasPermission(final Invocation invocation) {
-        return invocation.source().hasPermission("command.test");
-    }
-
-    @Override
-    public List<String> suggest(final Invocation invocation) {
-        return List.of();
-    }
 
 }

@@ -34,7 +34,7 @@ public class VelocityTools{
 
 
         CommandMeta findCommandMeta = commandManager.metaBuilder("find")
-                .aliases("whereis", "findplayer")
+                .aliases("whereis")
                 .plugin(this)
                 .build();
         SimpleCommand findCommand = new FindCommand(proxy);
@@ -45,6 +45,6 @@ public class VelocityTools{
                 .plugin(this)
                 .build();
         SimpleCommand alertCommand = new AlertCommand(proxy);
-        commandManager.register(findCommandMeta, alertCommand);
+        commandManager.register(alertCommandMeta, alertCommand);
     }
 }

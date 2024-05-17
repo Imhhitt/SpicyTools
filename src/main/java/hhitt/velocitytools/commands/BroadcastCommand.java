@@ -11,11 +11,12 @@ import net.kyori.adventure.title.TitlePart;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public class AlertCommand implements SimpleCommand {
+public class BroadcastCommand implements SimpleCommand {
+
 
     final ProxyServer proxy;
     final VelocityTools plugin;
-    public AlertCommand(ProxyServer proxy, VelocityTools plugin) {
+    public BroadcastCommand(ProxyServer proxy, VelocityTools plugin) {
         this.proxy = proxy;
         this.plugin = plugin;
     }
@@ -30,21 +31,20 @@ public class AlertCommand implements SimpleCommand {
         //Gets the message to send and converting it
         String[] args = invocation.arguments();
 
-        if(!sender.hasPermission("velocitytools.alert") || !sender.hasPermission("velocitytools.admin")){
+        if(!sender.hasPermission("velocitytools.broadcast") || !sender.hasPermission("velocitytools.admin")){
             sender.sendMessage(MessageUtils.MiniMessageParse(
-                    plugin.getConfig().node("Messages", "No-Permission").getString()));
+                    plugin.getConfig().node("Messages", "No-Permission").getString()
+            ));
             return;
         }
 
         //Check if the command has arguments. If no, it is wrong!
         if(args.length == 0){
             sender.sendMessage(MessageUtils.MiniMessageParse(
-                    plugin.getConfig().node("Messages", "Wrong-Command-Usage").getString()));
+                    plugin.getConfig().node("Messages", "Wrong-Command-Usage").getString()
+            ));
             return;
         }
-
-
-
 
         //Build the args into a String.
         Collection<Player> allPlayers = proxy.getAllPlayers().stream()
@@ -61,42 +61,56 @@ public class AlertCommand implements SimpleCommand {
         }
 
         //Detect the mode of alert at config.yml
-        if(plugin.getConfig().node("Alert", "Mode").getString().equalsIgnoreCase("Message")){
+        if(plugin.getConfig().node("Broadcast", "Mode").getString().equalsIgnoreCase("Message")){
+
 
             //Get all players and then send them the message by chat, also print on console
-            allPlayers.forEach(player -> player.sendMessage(MessageUtils.MiniMessageParse(
-                    plugin.getConfig().node("Alert", "Prefix").getString() + " " + alert)));
-
+            allPlayers.forEach(player -> player.sendMessage(MessageUtils.MiniMessageParse(alert.toString())));
             //Also sent to console
-            proxy.getConsoleCommandSource().sendMessage(MessageUtils.MiniMessageParse(
-                    plugin.getConfig().node("Alert", "Prefix").getString() + " " + alert));
+            proxy.getConsoleCommandSource().sendMessage(MessageUtils.MiniMessageParse(alert.toString()));
 
-        } else if (plugin.getConfig().node("Alert", "Mode").getString().equalsIgnoreCase("Title")) {
+
+
+
+        } else if (plugin.getConfig().node("Broadcast", "Mode").getString().equalsIgnoreCase("Title")) {
+
+
 
             //Get all players and then send them the message by Title, also print on console
             for (Player player : proxy.getAllPlayers()){
 
-                //Send prefix
-                player.sendTitlePart(TitlePart.TITLE, MessageUtils.MiniMessageParse(
-                        plugin.getConfig().node("Alert", "Prefix").getString()));
+                //If is set as a Title at broadcast config:
+                if(plugin.getConfig().node("Broadcast", "While-Title").getString().equalsIgnoreCase("Title")){
+                    player.sendTitlePart(TitlePart.TITLE, MessageUtils.MiniMessageParse(alert.toString()));
+                    player.sendTitlePart(TitlePart.SUBTITLE, MessageUtils.MiniMessageParse(""));
+                    //If is set as a Subtitle at broadcast config:
+                } else if(plugin.getConfig().node("Broadcast", "While-Title").getString().equalsIgnoreCase("Subtitle")){
+                    player.sendTitlePart(TitlePart.TITLE, MessageUtils.MiniMessageParse(""));
+                    player.sendTitlePart(TitlePart.SUBTITLE, MessageUtils.MiniMessageParse(alert.toString()));
+                }
 
-                //Send alert
-                player.sendTitlePart(TitlePart.SUBTITLE, MessageUtils.MiniMessageParse(alert.toString()));
+
 
             }
 
             //Also sent to console
             proxy.getConsoleCommandSource().sendMessage(MessageUtils.MiniMessageParse(alert.toString()));
 
+
+
         } else if (plugin.getConfig().node("Broadcast", "Mode").getString().equalsIgnoreCase("ActionBar")){
+
+
 
             for (Player player : proxy.getAllPlayers()){
 
                 //Send ActionBar
-                player.sendActionBar(MessageUtils.MiniMessageParse(alert.toString()));
+                player.sendActionBar(MessageUtils.MiniMessageParse(
+                        plugin.getConfig().node("Broadcast", "Prefix").getString() + " " + alert));
 
                 //Also sent to console
-                proxy.getConsoleCommandSource().sendMessage(MessageUtils.MiniMessageParse(alert.toString()));
+                proxy.getConsoleCommandSource().sendMessage(MessageUtils.MiniMessageParse(
+                        plugin.getConfig().node("Broadcast", "Prefix").getString() + " " + alert));
 
 
             }
@@ -106,4 +120,6 @@ public class AlertCommand implements SimpleCommand {
 
 
     }
+
+
 }

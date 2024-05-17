@@ -1,0 +1,27 @@
+Alert:
+  # Alter is a message sent to all online players (also to console)
+  # You can choose Message, Title or ActionBar
+  Prefix: "<b><color:#ff3037>[Alert]</color></b>"
+  Mode: Message
+
+Broadcast:
+  # Same as Alert but without the plugin prefix
+  # You can choose Message, Title or ActionBar
+  Mode: Message
+  # Choose if you want to send a Title or a SubTitle while the mode is set on Title
+  While-Title: Subtitle
+Find:
+  Player-Found: "<green>The player <red>%player%</red> is connected at the server <yellow>%server%</yellow>.</green>"
+  Player-Not-Found: "<red>The player <white>%player%</white> isn't a valid player or is offline!</red>"
+
+Global-List:
+  Total: "The total amount of player(s) is: %playercount%"
+  Per-Server: "The amount of player(s) for the server %server% is: %playercount%"
+
+Messages:
+  Wrong-Command-Usage: "<red>Wrong Command. Use <gold>/Velocitytools help</gold>.</red>"
+  Player-Not-Found: "<red>Player not found!</red>"
+  No-Permission: "<red>You don't have permission to perform this command!</red>"
+  Reload-Config: "<blue>Config.yml file has been reloaded successfully!</blue>"
+  Help: "<red>Please, read the docs to know which are the commands and their usage.</red> <green>docs.velocitytools</green>"
+

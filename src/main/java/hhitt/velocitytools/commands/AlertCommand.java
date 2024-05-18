@@ -30,9 +30,10 @@ public class AlertCommand implements SimpleCommand {
         //Gets the message to send and converting it
         String[] args = invocation.arguments();
 
-        if(!sender.hasPermission("velocitytools.alert") || !sender.hasPermission("velocitytools.admin")){
+        if(!sender.hasPermission("velocitytools.alert") && !sender.hasPermission("velocitytools.admin")){
             sender.sendMessage(MessageUtils.MiniMessageParse(
-                    plugin.getConfig().node("Messages", "No-Permission").getString()));
+                    plugin.getConfig().node("Messages", "No-Permission").getString()
+            ));
             return;
         }
 
@@ -88,15 +89,17 @@ public class AlertCommand implements SimpleCommand {
             //Also sent to console
             proxy.getConsoleCommandSource().sendMessage(MessageUtils.MiniMessageParse(alert.toString()));
 
-        } else if (plugin.getConfig().node("Broadcast", "Mode").getString().equalsIgnoreCase("ActionBar")){
+        } else if (plugin.getConfig().node("Alert", "Mode").getString().equalsIgnoreCase("ActionBar")){
 
             for (Player player : proxy.getAllPlayers()){
 
                 //Send ActionBar
-                player.sendActionBar(MessageUtils.MiniMessageParse(alert.toString()));
+                player.sendActionBar(MessageUtils.MiniMessageParse(
+                        plugin.getConfig().node("Alert", "Prefix").getString() + " " + alert));
 
                 //Also sent to console
-                proxy.getConsoleCommandSource().sendMessage(MessageUtils.MiniMessageParse(alert.toString()));
+                proxy.getConsoleCommandSource().sendMessage(MessageUtils.MiniMessageParse(
+                        plugin.getConfig().node("Alert", "Prefix").getString() + " " + alert));
 
 
             }

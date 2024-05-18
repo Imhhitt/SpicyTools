@@ -39,11 +39,15 @@ public class VelocityTools {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
+
+        //Config management on start
         config = createConfig("VelocityTools", "config.yml");
         if (config != null) {
             saveConfig(config, Paths.get("plugins", "VelocityTools", "config.yml"));
         }
 
+
+        //Build the commands
         CommandManager commandManager = proxy.getCommandManager();
 
         CommandMeta findCommandMeta = commandManager.metaBuilder("find")
@@ -80,7 +84,22 @@ public class VelocityTools {
                 .build();
         SimpleCommand mainCommand = new MainCommand(proxy, this);
         commandManager.register(mainCommandMeta, mainCommand);
+
+        CommandMeta catchCommandMeta = commandManager.metaBuilder("catch")
+                .aliases("catchplayer")
+                .plugin(this)
+                .build();
+        SimpleCommand catchCommand = new CatchCommand(proxy, this);
+        commandManager.register(catchCommandMeta, catchCommand);
+
+        CommandMeta sendCommandMeta = commandManager.metaBuilder("send")
+                .aliases("sendtoserver")
+                .plugin(this)
+                .build();
+        SimpleCommand sendCommand = new SendCommand(proxy, this);
+        commandManager.register(sendCommandMeta, sendCommand);
     }
+
 
     public ConfigurationNode getConfig() {
         return config;

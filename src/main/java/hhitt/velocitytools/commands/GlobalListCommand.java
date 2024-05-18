@@ -26,18 +26,22 @@ public class GlobalListCommand implements SimpleCommand {
         //Gets the message to send and converting it
         String[] args = invocation.arguments();
 
-        if(!sender.hasPermission("velocitytools.globallist") || !sender.hasPermission("velocitytools.admin")){
+        //Permission check
+        if(!sender.hasPermission("velocitytools.globalList") && !sender.hasPermission("velocitytools.admin")){
             sender.sendMessage(MessageUtils.MiniMessageParse(
-                    plugin.getConfig().node("Messages", "No-Permission").getString()));
+                    plugin.getConfig().node("Messages", "No-Permission").getString()
+            ));
             return;
         }
 
+        //Total proxy players
         String playerList = String.valueOf(proxy.getPlayerCount());
         String totalProxy = plugin.getConfig().node("Global-List", "Total").getString();
         String totalProxyFormatted = totalProxy.replace("%playercount%", playerList);
         sender.sendMessage(MessageUtils.MiniMessageParse(totalProxyFormatted));
 
 
+        //For each server players
         for (RegisteredServer server : proxy.getAllServers()) {
             String playersOnServer = String.valueOf(server.getPlayersConnected().size());
             String playersPerServer = plugin.getConfig().node("Global-List", "Per-Server").getString();

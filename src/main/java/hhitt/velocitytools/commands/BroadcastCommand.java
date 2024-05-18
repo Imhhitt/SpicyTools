@@ -31,7 +31,7 @@ public class BroadcastCommand implements SimpleCommand {
         //Gets the message to send and converting it
         String[] args = invocation.arguments();
 
-        if(!sender.hasPermission("velocitytools.broadcast") || !sender.hasPermission("velocitytools.admin")){
+        if(!sender.hasPermission("velocitytools.broadcast") && !sender.hasPermission("velocitytools.admin")){
             sender.sendMessage(MessageUtils.MiniMessageParse(
                     plugin.getConfig().node("Messages", "No-Permission").getString()
             ));
@@ -101,16 +101,13 @@ public class BroadcastCommand implements SimpleCommand {
         } else if (plugin.getConfig().node("Broadcast", "Mode").getString().equalsIgnoreCase("ActionBar")){
 
 
-
             for (Player player : proxy.getAllPlayers()){
 
                 //Send ActionBar
-                player.sendActionBar(MessageUtils.MiniMessageParse(
-                        plugin.getConfig().node("Broadcast", "Prefix").getString() + " " + alert));
+                player.sendActionBar(MessageUtils.MiniMessageParse(alert.toString()));
 
                 //Also sent to console
-                proxy.getConsoleCommandSource().sendMessage(MessageUtils.MiniMessageParse(
-                        plugin.getConfig().node("Broadcast", "Prefix").getString() + " " + alert));
+                proxy.getConsoleCommandSource().sendMessage(MessageUtils.MiniMessageParse(alert.toString()));
 
 
             }

@@ -2,9 +2,14 @@ package hhitt.velocitytools.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
+import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import hhitt.velocitytools.VelocityTools;
 import hhitt.velocitytools.utils.MessageUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainCommand implements SimpleCommand {
 
@@ -23,6 +28,7 @@ public class MainCommand implements SimpleCommand {
         //Gets the message to send and converting it
         String[] args = invocation.arguments();
 
+        //The command need 1 argument at least
         if(args.length == 0){
             sender.sendMessage(MessageUtils.MiniMessageParse(
                     plugin.getConfig().node("Messages", "Wrong-Command-Usage").getString()));
@@ -30,6 +36,7 @@ public class MainCommand implements SimpleCommand {
         }
 
 
+        //Reload config command
         if(args.length >= 0 && args[0].equalsIgnoreCase("reload")){
 
             if(!sender.hasPermission("velocitytools.reload") || !sender.hasPermission("velocitytools.admin")){
@@ -44,6 +51,7 @@ public class MainCommand implements SimpleCommand {
             return;
         }
 
+        //Help command
         if(args.length >= 0 && args[0].equalsIgnoreCase("help")){
 
             if(!sender.hasPermission("velocitytools.help") || !sender.hasPermission("velocitytools.admin")){
@@ -57,5 +65,14 @@ public class MainCommand implements SimpleCommand {
         }
 
 
+    }
+
+    @Override
+    public List<String> suggest(Invocation invocation) {
+        String[] args = invocation.arguments();
+            List<String> suggestions = new ArrayList<>();
+            suggestions.add("reload");
+            suggestions.add("help");
+        return suggestions;
     }
 }

@@ -1,11 +1,11 @@
-package hhitt.velocitytools.commands;
+package hhitt.spicytools.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
-import hhitt.velocitytools.VelocityTools;
-import hhitt.velocitytools.utils.MessageUtils;
+import hhitt.spicytools.SpicyTools;
+import hhitt.spicytools.utils.MessageUtils;
 import net.kyori.adventure.title.TitlePart;
 
 import java.util.Collection;
@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 public class AlertCommand implements SimpleCommand {
 
     final ProxyServer proxy;
-    final VelocityTools plugin;
-    public AlertCommand(ProxyServer proxy, VelocityTools plugin) {
+    final SpicyTools plugin;
+    public AlertCommand(ProxyServer proxy, SpicyTools plugin) {
         this.proxy = proxy;
         this.plugin = plugin;
     }
@@ -30,7 +30,7 @@ public class AlertCommand implements SimpleCommand {
         //Gets the message to send and converting it
         String[] args = invocation.arguments();
 
-        if(!sender.hasPermission("velocitytools.alert") && !sender.hasPermission("velocitytools.admin")){
+        if(!sender.hasPermission("spicytools.alert") && !sender.hasPermission("spicytools.admin")){
             sender.sendMessage(MessageUtils.MiniMessageParse(
                     plugin.getConfig().node("Messages", "No-Permission").getString()
             ));

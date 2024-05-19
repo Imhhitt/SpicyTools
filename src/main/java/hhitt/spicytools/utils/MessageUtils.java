@@ -1,4 +1,4 @@
-package hhitt.velocitytools.utils;
+package hhitt.spicytools.utils;
 
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.MiniMessage;

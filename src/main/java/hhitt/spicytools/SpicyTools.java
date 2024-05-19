@@ -1,4 +1,4 @@
-package hhitt.velocitytools;
+package hhitt.spicytools;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandManager;
@@ -8,7 +8,7 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
-import hhitt.velocitytools.commands.*;
+import hhitt.spicytools.commands.*;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.loader.ConfigurationLoader;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
@@ -20,19 +20,19 @@ import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 @Plugin(
-        id = "velocitytools",
-        name = "VelocityTools",
+        id = "spicytools",
+        name = "SpicyTools",
         version = "1.0",
         authors = "hhitt"
 )
-public class VelocityTools {
+public class SpicyTools {
 
     private final ProxyServer proxy;
     private final Logger logger;
     private ConfigurationNode config;
 
     @Inject
-    public VelocityTools(ProxyServer proxy, Logger logger) {
+    public SpicyTools(ProxyServer proxy, Logger logger) {
         this.proxy = proxy;
         this.logger = logger;
     }
@@ -41,9 +41,9 @@ public class VelocityTools {
     public void onProxyInitialization(ProxyInitializeEvent event) {
 
         //Config management on start
-        config = createConfig("VelocityTools", "config.yml");
+        config = createConfig("SpicyTools", "config.yml");
         if (config != null) {
-            saveConfig(config, Paths.get("plugins", "VelocityTools", "config.yml"));
+            reloadConfig();
         }
 
 
@@ -78,8 +78,8 @@ public class VelocityTools {
         SimpleCommand globalListCommand = new GlobalListCommand(proxy, this);
         commandManager.register(globalListCommandMeta, globalListCommand);
 
-        CommandMeta mainCommandMeta = commandManager.metaBuilder("velocitytools")
-                .aliases("vtools")
+        CommandMeta mainCommandMeta = commandManager.metaBuilder("spicytools")
+                .aliases("stools")
                 .plugin(this)
                 .build();
         SimpleCommand mainCommand = new MainCommand(proxy, this);
@@ -104,6 +104,11 @@ public class VelocityTools {
     public ConfigurationNode getConfig() {
         return config;
     }
+
+
+    /*
+    Thanks to https://github.com/AddisionS for send me the createConfig method ;))
+     */
 
     private ConfigurationNode createConfig(String folderName, String fileName) {
         Path pluginFolder = Paths.get("plugins", folderName);
@@ -131,21 +136,9 @@ public class VelocityTools {
         }
     }
 
-    private void saveConfig(ConfigurationNode config, Path configFile) {
-        ConfigurationLoader<?> loader = YamlConfigurationLoader.builder()
-                .path(configFile)
-                .build();
-        try {
-            loader.save(config);
-        } catch (IOException e) {
-            logger.info("Failed to save configuration: " + configFile.getFileName());
-            e.printStackTrace();
-        }
-    }
-
     public ConfigurationNode reloadConfig() {
         try {
-            Path configFile = Paths.get("plugins", "VelocityTools", "config.yml");
+            Path configFile = Paths.get("plugins", "SpicyTools", "config.yml");
             if (!Files.exists(configFile)) {
                 logger.warning("Configuration file does not exist.");
                 return null;

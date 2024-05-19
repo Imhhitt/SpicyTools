@@ -1,4 +1,4 @@
-package hhitt.velocitytools.commands;
+package hhitt.spicytools.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
@@ -6,8 +6,8 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
-import hhitt.velocitytools.VelocityTools;
-import hhitt.velocitytools.utils.MessageUtils;
+import hhitt.spicytools.SpicyTools;
+import hhitt.spicytools.utils.MessageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 public class CatchCommand implements SimpleCommand {
 
     final ProxyServer proxy;
-    final VelocityTools plugin;
-    public CatchCommand(ProxyServer proxy, VelocityTools plugin) {
+    final SpicyTools plugin;
+    public CatchCommand(ProxyServer proxy, SpicyTools plugin) {
         this.proxy = proxy;
         this.plugin = plugin;
     }
@@ -38,7 +38,7 @@ public class CatchCommand implements SimpleCommand {
         }
 
         Player catcher = (Player) sender;
-        if(!sender.hasPermission("velocitytools.catch") && !sender.hasPermission("velocitytools.admin")){
+        if(!sender.hasPermission("spicytools.catch") && !sender.hasPermission("spicytools.admin")){
             sender.sendMessage(MessageUtils.MiniMessageParse(
                     plugin.getConfig().node("Messages", "No-Permission").getString()
             ));

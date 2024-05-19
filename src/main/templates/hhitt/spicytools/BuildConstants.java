@@ -1,4 +1,4 @@
-package hhitt.velocitytools;
+package hhitt.spicytools;
 
 // The constants are replaced before compilation
 public class BuildConstants {

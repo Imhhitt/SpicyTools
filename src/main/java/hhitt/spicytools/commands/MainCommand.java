@@ -1,21 +1,19 @@
-package hhitt.velocitytools.commands;
+package hhitt.spicytools.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
-import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
-import hhitt.velocitytools.VelocityTools;
-import hhitt.velocitytools.utils.MessageUtils;
+import hhitt.spicytools.SpicyTools;
+import hhitt.spicytools.utils.MessageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MainCommand implements SimpleCommand {
 
     final ProxyServer proxy;
-    final VelocityTools plugin;
-    public MainCommand(ProxyServer proxy, VelocityTools plugin) {
+    final SpicyTools plugin;
+    public MainCommand(ProxyServer proxy, SpicyTools plugin) {
         this.proxy = proxy;
         this.plugin = plugin;
     }
@@ -39,7 +37,7 @@ public class MainCommand implements SimpleCommand {
         //Reload config command
         if(args.length >= 0 && args[0].equalsIgnoreCase("reload")){
 
-            if(!sender.hasPermission("velocitytools.reload") || !sender.hasPermission("velocitytools.admin")){
+            if(!sender.hasPermission("spicytools.reload") || !sender.hasPermission("spicytools.admin")){
                 sender.sendMessage(MessageUtils.MiniMessageParse(
                         plugin.getConfig().node("Messages", "No-Permission").getString()));
                 return;
@@ -54,7 +52,7 @@ public class MainCommand implements SimpleCommand {
         //Help command
         if(args.length >= 0 && args[0].equalsIgnoreCase("help")){
 
-            if(!sender.hasPermission("velocitytools.help") || !sender.hasPermission("velocitytools.admin")){
+            if(!sender.hasPermission("spicytools.help") || !sender.hasPermission("spicytools.admin")){
                 sender.sendMessage(MessageUtils.MiniMessageParse(
                         plugin.getConfig().node("Messages", "No-Permission").getString()));
                 return;

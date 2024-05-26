@@ -11,18 +11,21 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import hhitt.spicytools.commands.*;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.loader.ConfigurationLoader;
+import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Plugin(
         id = "spicytools",
         name = "SpicyTools",
-        version = "1.0",
+        version = "1.0.1",
         authors = "hhitt"
 )
 public class SpicyTools {
@@ -98,6 +101,14 @@ public class SpicyTools {
                 .build();
         SimpleCommand sendCommand = new SendCommand(proxy, this);
         commandManager.register(sendCommandMeta, sendCommand);
+
+        CommandMeta lobbyCommandMeta = commandManager.metaBuilder("lobby")
+                .aliases("hub")
+                .plugin(this)
+                .build();
+        SimpleCommand lobbyCommand = new LobbyCommand(proxy, this);
+        commandManager.register(lobbyCommandMeta, lobbyCommand);
+
     }
 
 

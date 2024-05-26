@@ -22,6 +22,12 @@ Broadcast:
   # Choose if you want to send a Title or a SubTitle while the mode is set on Title
   While-Title: Subtitle
 
+Lobby:
+  Lobby-Server: "MySuperLobby"
+  Pre-Connect-Message: "<green>Teleporting to the lobby...</green>"
+  Post-Connect-Message: "<gold>Connected to lobby!</gold>"
+  Already-Connected: "<red>You are already connected to the lobby!</red>"
+
 Find:
   Player-Found: "<color:#7aff81>The player <color:#ffbc4f>%player%</color> is connected at the server <color:#ffbc4f>%server%</color>.</color>"
 
@@ -42,5 +48,6 @@ Messages:
   Already-Connected: "<red>The player is already connected to this server!</red>"
   Must-Be-Player: "<red>Only players can run this command!</red>"
   Server-Not-Found: "<red>Server not found!</red>"
-  Player-Sent: "<green>You have sent <blue>%player%</blue> to the server <gold>%server%</gold></green>"
+  Player-Sender: "<green>You have sent <blue>%player%</blue> to the server <gold>%server%</gold></green>"
+  Player-Sent: "<gold>You have been forced sent to this server (<red>%server%</red>) by a Staff (<blue>%player%</blue>)!</gold>"
 

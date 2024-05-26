@@ -66,19 +66,23 @@ public class SendCommand implements SimpleCommand {
             return;
         }
 
-        //Check if the player is already connected to the server os catcher
-        if(((Player) sender).getCurrentServer().get().getServerInfo().getName().equalsIgnoreCase(
-                player.getCurrentServer().get().getServerInfo().getName())){
+        //Check if the player is already connected to the server
+        if(args[1].equalsIgnoreCase(player.getCurrentServer().get().getServerInfo().getName())){
 
             sender.sendMessage(MessageUtils.MiniMessageParse(
                     plugin.getConfig().node("Messages", "Already-Connected").getString()));
             return;
         }
 
-        //Send the player to teh server
+        //Send the player to the server
         RegisteredServer server = optionalServer.get();
         player.createConnectionRequest(server).fireAndForget();
+
         sender.sendMessage(MessageUtils.MiniMessageParse(
+                plugin.getConfig().node("Messages", "Player-Sender").getString().replace(
+                        "%player%", playerName).replace("%server%", serverName)));
+
+        player.sendMessage(MessageUtils.MiniMessageParse(
                 plugin.getConfig().node("Messages", "Player-Sent").getString().replace(
                         "%player%", playerName).replace("%server%", serverName)));
     }
